@@ -17,6 +17,16 @@
       <input id="url" type="text" />
     </script>
 
+    <script type="text/template" id="comments-template">
+      <h2>Comments:</h2>
+    </script>
+    
+    <script type="text/template" id="comment-template">
+      <div><%= author %></div>
+      <div><%= time %></div>
+      <div><%= body %></div>
+    </script>
+
   </head>
   <body>
     <h1>Realtime HN</h1>
