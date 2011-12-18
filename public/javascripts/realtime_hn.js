@@ -51,6 +51,9 @@
     }
     Comments.prototype.model = RealtimeHN.Comment;
     Comments.prototype.url = '/comments';
+    Comments.prototype.comparator = function(comment) {
+      return -comment.get("id");
+    };
     return Comments;
   })();
   RealtimeHN.IndexView = (function() {

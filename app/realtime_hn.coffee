@@ -26,6 +26,9 @@ class RealtimeHN.Comment extends Backbone.Model
 class RealtimeHN.Comments extends Backbone.Collection
   model: RealtimeHN.Comment
   url: '/comments'
+  
+  comparator: (comment) ->
+    -comment.get("id")
     
 # Views
 class RealtimeHN.IndexView extends Backbone.View
