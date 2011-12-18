@@ -9,10 +9,18 @@
     <script src="/javascripts/jquery.js"></script>
     <script src="/javascripts/underscore.js"></script>
     <script src="/javascripts/backbone.js"></script>
+    <script src="/javascripts/realtime_hn.js"></script>
+    
+    <!-- Templates -->
+    <script type="text/template" id="url-template">
+      <h2>Enter the url for an HN post:</h2>
+      <input id="url" type="text" />
+    </script>
+
   </head>
   <body>
     <h1>Realtime HN</h1>
-    <h2>Enter the url for an HN post:</h2>
-    <input id="url" type="text" />
+    <div id="content">
+    </div>
   </body>
 </html>
