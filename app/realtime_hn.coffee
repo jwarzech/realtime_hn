@@ -86,6 +86,7 @@ class RealtimeHN.CommentsView extends Backbone.View
     
 class RealtimeHN.CommentView extends Backbone.View
   tagName: 'li'
+  className: 'comment'
   
   render: =>
     $(@el).html(_.template($('#comment-template').html())(@model.toJSON()))

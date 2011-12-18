@@ -148,6 +148,7 @@
       CommentView.__super__.constructor.apply(this, arguments);
     }
     CommentView.prototype.tagName = 'li';
+    CommentView.prototype.className = 'comment';
     CommentView.prototype.render = function() {
       $(this.el).html(_.template($('#comment-template').html())(this.model.toJSON()));
       return this;

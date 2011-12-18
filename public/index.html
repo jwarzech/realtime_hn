@@ -4,6 +4,7 @@
     <title>Realtime HN</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     
+    <link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css">
     <link rel="stylesheet" href="/stylesheets/style.css" media="screen" />
     
     <script src="/javascripts/jquery.js"></script>
@@ -14,27 +15,38 @@
     
     <!-- Templates -->
     <script type="text/template" id="url-template">
-      <h2>Enter the url for an HN post:</h2>
-      <input id="url" type="text" />
+      <div class="row">
+        <div class="span12 offset2">
+          <h2>Enter the url for an HN post:</h2>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span12 offset2">
+          <input id="url" class="span12" type="text" />
+        </div>
+      </div>
     </script>
 
     <script type="text/template" id="comments-template">
-      <h2>Comments:</h2>
-      <ul>
-      </ul>
+      <div class="row">
+        <div class="span12 offset2">
+          <ul class="unstyled">
+          </ul>
+        </div>
+      </div>
     </script>
     
     <script type="text/template" id="comment-template">
-      <div><%= id %></div>
-      <div><%= author %></div>
-      <div><%= time %></div>
-      <div><%= body %></div>
+      <strong><%= author %></strong> <em><%= time %></em>
+      <p><%= body %></p>
     </script>
 
   </head>
   <body>
-    <h1>Realtime HN</h1>
-    <div id="content">
+    <div id="header">
+      <h1><span class="highlight">Realtime</span> <small>Hacker News</small></h1>
+    </div>
+    <div id="content" class="container">
     </div>
   </body>
 </html>
