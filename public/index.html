@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/stylesheets/style.css" media="screen" />
     
     <script src="/javascripts/jquery.js"></script>
+    <script src="/javascripts/jquery-ui-effects.js"></script>
     <script src="/javascripts/underscore.js"></script>
     <script src="/javascripts/backbone.js"></script>
     <script src="/javascripts/realtime_hn.js"></script>
@@ -19,9 +20,12 @@
 
     <script type="text/template" id="comments-template">
       <h2>Comments:</h2>
+      <ul>
+      </ul>
     </script>
     
     <script type="text/template" id="comment-template">
+      <div><%= id %></div>
       <div><%= author %></div>
       <div><%= time %></div>
       <div><%= body %></div>

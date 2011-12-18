@@ -14,6 +14,9 @@ get '/comments' do
     comment = {}
     header = item.css('span.comhead').first  
     comment[:id] = header.css('a').last['href'].split('=').last
+    
+    next if params[:last_id] && comment[:id] <= params[:last_id]
+    
     comment[:author] = header.content.split(' ').first
     comment[:time] = header.content.gsub(comment[:author], '').split('|').first.strip
     comment[:body] = item.css('span.comment').first.content
@@ -22,3 +25,4 @@ get '/comments' do
   
   result.to_json
 end
+

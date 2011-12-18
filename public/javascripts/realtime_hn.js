@@ -67,17 +67,13 @@
       'change #url': 'fetchComments'
     };
     IndexView.prototype.fetchComments = function(event) {
-      var comments, commentsView;
+      var comments, commentsView, url;
+      url = $(event.target).val();
       comments = new RealtimeHN.Comments();
       commentsView = new RealtimeHN.CommentsView({
         collection: comments
-      });
-      $("#content").append(commentsView.render().el);
-      return comments.fetch({
-        data: {
-          url: $(event.target).val()
-        }
-      });
+      }, url);
+      return $("#content").append(commentsView.render().el);
     };
     IndexView.prototype.render = function() {
       $(this.el).html(_.template($('#url-template').html()));
@@ -88,22 +84,60 @@
   RealtimeHN.CommentsView = (function() {
     __extends(CommentsView, Backbone.View);
     function CommentsView() {
+      this.renderComment = __bind(this.renderComment, this);
       this.render = __bind(this.render, this);
+      this.newComments = __bind(this.newComments, this);
+      this.updateComments = __bind(this.updateComments, this);
       CommentsView.__super__.constructor.apply(this, arguments);
     }
-    CommentsView.prototype.initialize = function() {
-      return this.collection.bind('reset', this.render);
+    CommentsView.prototype.initialize = function(collection, url) {
+      CommentsView.__super__.initialize.call(this, collection);
+      this.url = url;
+      this.collection.bind('reset', this.render);
+      this.collection.bind('add', this.renderComment);
+      return this.collection.fetch({
+        data: {
+          url: this.url
+        }
+      });
+    };
+    CommentsView.prototype.updateComments = function() {
+      var new_comments;
+      new_comments = new RealtimeHN.Comments();
+      return new_comments.fetch({
+        data: {
+          url: this.url,
+          last_id: this.collection.first().id
+        },
+        success: this.newComments
+      });
+    };
+    CommentsView.prototype.newComments = function(comments, response) {
+      return comments.each(__bind(function(item) {
+        return this.collection.add(item);
+      }, this));
     };
     CommentsView.prototype.render = function() {
       $(this.el).html(_.template($('#comments-template').html()));
-      this.collection.each(__bind(function(item) {
-        var commentView;
-        commentView = new RealtimeHN.CommentView({
-          model: item
-        });
-        return $(this.el).append(commentView.render().el);
-      }, this));
+      if (this.collection.length !== 0) {
+        this.collection.each(__bind(function(item) {
+          var commentView;
+          commentView = new RealtimeHN.CommentView({
+            model: item
+          });
+          return $(this.el).find('ul').append(commentView.render().el);
+        }, this));
+      }
+      setInterval(this.updateComments, 60000);
       return this;
+    };
+    CommentsView.prototype.renderComment = function(comment) {
+      var commentView;
+      commentView = new RealtimeHN.CommentView({
+        model: comment
+      });
+      $(this.el).find('ul').prepend(commentView.render().el);
+      return $(this.el).find('li').first().effect('highlight', {}, 1000);
     };
     return CommentsView;
   })();
@@ -113,6 +147,7 @@
       this.render = __bind(this.render, this);
       CommentView.__super__.constructor.apply(this, arguments);
     }
+    CommentView.prototype.tagName = 'li';
     CommentView.prototype.render = function() {
       $(this.el).html(_.template($('#comment-template').html())(this.model.toJSON()));
       return this;
